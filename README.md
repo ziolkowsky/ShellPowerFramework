@@ -1,5 +1,5 @@
-## Configuration
-# root\Config.txt
+# Configuration
+## root\Config.txt
 
 This section is used to create .NOTIFY sections at Comment-Based HELP sections.
 You can set any customized parameter you want to set at scripts descriptions.
