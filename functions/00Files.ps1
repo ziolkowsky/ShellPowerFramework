@@ -112,7 +112,7 @@ function Global:Reload-File{
         Write-Output "File $f has been reloaded."
 }
 
-function Set-File{
+function Global:Set-File{
     param(
         [Parameter(Position=0)]
         [string]$f,
