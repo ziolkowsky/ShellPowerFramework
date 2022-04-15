@@ -62,7 +62,7 @@ function Global:Remove-File{
             $psISE.CurrentPowerShellTab.Files.Remove($psISE.CurrentFile) | Out-Null
         }
         rm ".\$f"
-        if($f -eq $Global:Filename){rv $Global:Filename -Force:$Force}
+        if($f -eq $Global:Filename){rv -Name Filename -Scope Global -Force:$Force}
         Write-Output $("File {0} has been removed." -f $f)
 }
 
