@@ -162,7 +162,6 @@ function Global:Open-File{
     [Alias("of")]
     param([Parameter(Position=0)][string]$f) 
         if(!$f){return}
-        #$f=Parse-Filename $f
         $CheckEditor=Get-Command -CommandType Application | ? { $_.Name -eq 'powershell_ise.exe' -or $_.Source -like '*powershell*ise.exe'}
         if(!$CheckEditor){
             $CheckEditor="notepad.exe"
