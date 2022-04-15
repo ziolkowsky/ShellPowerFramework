@@ -46,7 +46,6 @@ if($Auto){
             cf $Filename
         }
     }
-    # Create-Init $Filename $Functionname
 }
 
 <#
@@ -85,6 +84,6 @@ Framework: https://github.com/ziolkowsky/ShellPowerFramework
 
 .NOTES
 Author : Sebastian Zió³kowski
-Website: ziolkowsky.wordpress.com.\I
+Website: ziolkowsky.wordpress.com
 GitHub : github.com/ziolkowsky
 #>
