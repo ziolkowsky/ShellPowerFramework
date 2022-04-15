@@ -175,17 +175,20 @@ Opens file in Powershell ISE.
 
 .DESCRIPTION
 Opens specified or latest created file. By default it will try to edit file with Powershell ISE  but if not found at system then
-it will open in notepad.
+it will open in notepad. (Not sure why it is working this way, just wanted to make it so I did)
 
 .EXAMPLE
-PS> Open-File <string>.ps1
+PS> Open-File TestFile
 
 .EXAMPLE
-PS> of <string>.ps1
+PS> Open-File 
 
-.EXAMPLE
-PS> of
-Open latest created file.
+Opens latest created file.
+
+.NOTES
+Author : Sebastian Zió³kowski
+Website: ziolkowsky.wordpress.com
+GitHub : github.com/ziolkowsky
 #>
 }
 
