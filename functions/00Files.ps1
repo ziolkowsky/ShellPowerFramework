@@ -88,7 +88,8 @@ GitHub : github.com/ziolkowsky
 #>
 }
 
-function Global:Create-FileFunction{[Alias('cff')]
+function Global:Create-FileFunction{
+    [Alias('cff')]
     param(
         [Parameter(Position=0)]
         [string]$Filename=$Filename,
@@ -107,11 +108,25 @@ function Global:Create-FileFunction{[Alias('cff')]
 
 <#
 .SYNOPSIS
-Creates funcion in new or existing file.
+Creates one or multiple functions in new or existing file.
 
 .DESCRIPTION
-Creates function structur in new file or appends it to existing one. You can specify file name, function name
-and decide if function should have CommentBased-Help section. 
+Creates functions structure in new file or appends it to existing one. You can specify file name and functions names. 
+It is possible to attach Comment Based Help section by including proper parameter.
+
+.PARAMETER CommentBasedHelp
+Adds Comment Based Help to functions.
+
+.PARAMETER f
+File name
+
+.PARAMETER fu
+Function name 
+
+.NOTES
+Author : Sebastian Zió³kowski
+Website: ziolkowsky.wordpress.com
+GitHub : github.com/ziolkowsky
 #>
 }
 
