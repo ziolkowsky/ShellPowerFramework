@@ -1,8 +1,9 @@
 function Global:Parse-Filename{
     param([string]$f=$Filename)
     if(!$f){ return "{0}-NewScript.ps1" -f $(Get-Date).ToString('yyyyMMdd_HHmmss') }
-    if($f.StartsWith('.\')){$f=Split-Path $f -leaf}
-    if($f -match '.ps1'){ return $f }
+    if($f.Substring($f.Length -4,4).StartsWith('.')){
+        return $f 
+    }
     return "{0}.ps1" -f $f
 }
 
