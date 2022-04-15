@@ -141,6 +141,21 @@ function Global:Remove-File{
         rm ".\$f"
         if($f -eq $Global:Filename){rv -Name Filename -Scope Global -Force:$Force}
         Write-Output $("File {0} has been removed." -f $f)
+<#
+.SYNOPSIS
+Removes file
+
+.DESCRIPTION
+Removes file by provided file name or last created if blank. If file is opened in Powershell ISE proper tab will be closed before removing. 
+
+.PARAMETER f
+File name
+
+.NOTES
+Author : Sebastian Zió³kowski
+Website: ziolkowsky.wordpress.com
+GitHub : github.com/ziolkowsky
+#>
 }
 
 function Global:Open-File{
