@@ -22,9 +22,5 @@ To change it uncomment below line.
 
 
 # Useful functions and shortcuts 
-of (Open-File) - opens last created file or file passed as parameter (PS> of <file_name>)
-rf (Remove-File) - removes last created file or file passed as parameter (PS> rf <file_name>)
-
-swd (Set-WorkingDirectory) - sets working directory to last mounted path, path passed as parameter or framework root directory if any previous not founded.
 
 
