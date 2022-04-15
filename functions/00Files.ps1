@@ -5,6 +5,37 @@ function Global:Parse-Filename{
         return $f 
     }
     return "{0}.ps1" -f $f
+<#
+.SYNOPSIS
+Parses filename.
+
+.DESCRIPTION
+Parses filename and returns string with PS1 extension if not provided or whole default string with current datetime in format: yyyyMMdd_HHmmss-NewScript.ps1.
+Returns same string when extension was provided with filename.
+
+.EXAMPLE
+PS> Parse-Filename TestFile 
+
+Returns: TestFile.ps1
+
+.EXAMPLE
+PS> Parse-Filename 
+
+Returns: 20220415_212359-NewScript.ps1 (based at current Get-Date)
+
+.EXAMPLE 
+PS> Parse-Filename TestFile.txt
+
+Returns: TestFile.txt
+
+.PARAMETER f
+Filename to parse.
+
+.NOTES
+Author : Sebastian Zió³kowski
+Website: ziolkowsky.wordpress.com
+GitHub : github.com/ziolkowsky
+#>
 }
 
 function Global:Create-File{
