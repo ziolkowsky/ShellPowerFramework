@@ -10,7 +10,8 @@ param(
     [string]$Filename,
     [switch]$Force,
     [Parameter(Position=1)]
-    [string]$Functionname
+    [string]$Functionname,
+    [switch]$Local
 )
 
 $ErrorActionPreference="Stop"
@@ -68,11 +69,14 @@ Some functions can be executed automatically after initial load.
 .PARAMETER CommentBasedHelp
 Adds Comment-Based Help sections to script and function.
 
+.PARAMETER Local
+Defines local config file.
+
 .LINK 
 Framework: https://github.com/ziolkowsky/ShellPowerFramework
 
 .NOTES
 Author : Sebastian Zió³kowski
-Website: ziolkowsky.wordpress.com
+Website: ziolkowsky.wordpress.com.\I
 GitHub : github.com/ziolkowsky
 #>
