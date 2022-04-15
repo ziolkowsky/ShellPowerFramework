@@ -55,6 +55,37 @@ function Global:Create-File{
         Set-File $f
         Open-File $f
     }
+<#
+.SYNOPSIS
+Creates and/or opens file.
+
+.DESCRIPTION
+Function creates file and opens it. If file already exist it will be opened. If command executes with Functionname parameter then function structure will be appended to file.
+It is possible to attach Comment Based Help section by including proper parameter.
+
+.EXAMPLE
+PS> Create-File TestFile 
+
+.EXAMPLE
+PS> Create-File TestFile New-Function
+
+.EXAMPLE 
+PS> Create-File TestFile New-Function -CommentBasedHelp
+
+.PARAMETER CommentBasedHelp
+Adds Comment Based Help to function.
+
+.PARAMETER f
+File name
+
+.PARAMETER fu
+Function name 
+
+.NOTES
+Author : Sebastian Zió³kowski
+Website: ziolkowsky.wordpress.com
+GitHub : github.com/ziolkowsky
+#>
 }
 
 function Global:Create-FileFunction{[Alias('cff')]
