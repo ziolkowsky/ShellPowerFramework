@@ -44,16 +44,17 @@ function Global:Unmount-WorkingDirectory{
     }
 }
 
-function Mount-Init{
-    if($Config.'project.name'){
-        $Global:MountName=$Config.'project.name'
-    }else{
-        $Global:MountName=Split-Path (Split-Path -Parent $PSScriptRoot) -Leaf
-        
-    }
-    $Global:MountPath=$PSScriptRoot
+function Mount-Init{    
     if($Global:Auto){
         Mount-Workdir
         Set-WorkingDirectory
     }
 }
+
+if($Config.'project.name'){
+    $Global:MountName=$Config.'project.name'
+}else{
+    $Global:MountName=Split-Path (Split-Path -Parent $PSScriptRoot) -Leaf       
+}
+$Global:MountPath=$PSScriptRoot
+
