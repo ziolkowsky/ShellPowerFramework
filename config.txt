@@ -1,0 +1,9 @@
+## Author sections is used to generate .NOTES section at CommentBased-Help attached to scripts/functions. 
+## All Author sections can be modified to custom fields:
+# author.<custom_key>=<custom_value>
+author.website=johnsnow.com
+author.github=github.com
+author.name=jOHN sNOW
+
+## Project name is getting from framework parent directory. This behaviour can be be overidden by adding:
+project.name=SPFramework
