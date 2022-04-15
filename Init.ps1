@@ -38,6 +38,14 @@ Get-ChildItem .\functions | where {!$_.PSIsContainer} | foreach {
 if($Auto){
     Write-Host $null
     Mount-Init
+    if($Filename){
+        $Filename=Parse-Filename $Filename
+        if(test-path $Filename){
+            of $Filename
+        }else{
+            cf $Filename
+        }
+    }
     # Create-Init $Filename $Functionname
 }
 
