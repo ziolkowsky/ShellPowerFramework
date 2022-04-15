@@ -1,6 +1,7 @@
 function Global:Parse-Filename{
     param([string]$f=$Filename)
     if(!$f){ return "{0}-NewScript.ps1" -f $(Get-Date).ToString('yyyyMMdd_HHmmss') }
+    if($f.StartsWith('.\')){$f=Split-Path $f -leaf}
     if($f -match '.ps1'){ return $f }
     return "{0}.ps1" -f $f
 }
@@ -38,7 +39,7 @@ function Global:Create-FileFunction{[Alias('cff')]
         $fu | foreach {
             Set-File $f $_ -Append -CommentBasedHelp:$CommentBasedHelp
         }
-        Reload-File $f
+        Reload-Tab $f
     }
 
 <#
@@ -101,7 +102,6 @@ function Global:Reload-File{
         )
         $f=Parse-Filename $f
         $itab=$psise.PowerShellTabs.Files | ? { $_.DisplayName -eq $f } 
-    
         if(!$itab){
             Open-File $f
             return
