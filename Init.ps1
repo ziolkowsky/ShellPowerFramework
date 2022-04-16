@@ -10,8 +10,7 @@ param(
     [string]$FileName,
     [switch]$Force,
     [Parameter(Position=1)]
-    [string]$FunctionName,
-    [switch]$Local
+    [string]$FunctionName
 )
 
 $ErrorActionPreference="Stop"
@@ -96,9 +95,6 @@ Defines file name.
 
 .Parameter FunctionName
 Defines function name which will be append to file.
-
-.PARAMETER Local
-Defines local config file.
 
 .LINK 
 https://github.com/ziolkowsky/ShellPowerFramework
