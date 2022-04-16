@@ -284,7 +284,7 @@ function Global:Set-File{
         New-Item -ItemType File -Name $File -Path .\ -Force:$Force | Out-Null
         Write-Output "File $File has been created."
     }
-    if($Append){
+    if($Append -or $FunctionName){
         $s=Get-Function -FunctionName $FunctionName -CommentBasedHelp:$CommentBasedHelp
         $s | Out-File $File -Append
         Write-Output "Function $FunctionName has been added to $File."
@@ -300,7 +300,20 @@ Creates file and appends function structure if proper parameters are included.
 PS> Set-File TestFile
 
 .EXAMPLE
-PS> Reload-File 
+PS> Set-File TestFile -Force
+
+Creates new file even if TestFile already exists.
+
+.EXAMPLE 
+PS> Set-File TestFile New-Function
+
+Creates file with function in it. Appends to existing file.
+
+.EXAMPLE
+PS> Set-File TestFile New-Function -CommentBasedHelp
+
+Creates file with function and comment based help section. Appends to existing file.
+
 
 Reloads current active tab.
 
