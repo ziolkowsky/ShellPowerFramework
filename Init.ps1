@@ -54,10 +54,10 @@ if($FileName -and $FunctionName){
 
 <#
 .DESCRIPTION
-Initial loads framework functions to PS session. 
+Loads framework functions to PS session. 
 
 .SYNOPSIS
-Loads all framework functions to current Powershell session. 
+Loads framework functions to PS session. 
 
 .EXAMPLE
 PS> init.ps1
@@ -96,11 +96,11 @@ Defines file name.
 .Parameter FunctionName
 Defines function name which will be append to file.
 
-.LINK 
-https://github.com/ziolkowsky/ShellPowerFramework
+.LINK
+https://ziolkowsky.wordpress.com/2022/04/16/init-ps1/
 
 .LINK 
-https://ziolkowsky.wordpress.com/category/spframework/
+https://github.com/ziolkowsky/ShellPowerFramework
 
 .NOTES
 Author : Sebastian Zió³kowski
