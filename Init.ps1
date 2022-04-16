@@ -10,7 +10,7 @@ param(
     [string]$Filename,
     [switch]$Force,
     [Parameter(Position=1)]
-    [string]$Functionname,
+    [string]$FunctionName,
     [switch]$Local
 )
 
@@ -35,18 +35,23 @@ Get-ChildItem .\functions | where {!$_.PSIsContainer} | foreach {
         throw $_
     }
 }
+Write-Host $null
+
 if($Auto){
-    Write-Host $null
-    Mount-Init
-    if($Filename){
-        $Filename=Parse-Filename $Filename
-        if(test-path $Filename){
-            of $Filename
-        }else{
-            cf $Filename
-        }
+    Mount-Init       
+}
+
+if($Filename -and $FunctionName){
+    Create-FileFunction $Filename $FunctionName -CommentBasedHelp:$CommentBasedHelp
+}elseif($Filename){
+    $Filename=Parse-Filename $Filename
+    if(test-path $Filename){
+        of $Filename
+    }else{
+        cf $Filename
     }
 }
+
 
 <#
 .DESCRIPTION
