@@ -1,4 +1,7 @@
-﻿if($Local){$f='.\config_local.txt'}else{$f='.\config.txt'}
+﻿$f='.\config_local.txt'
+if(!(test-path $f)){
+    $f='.\config.txt'
+}
 $c=$(gc $f -Encoding UTF8) -notmatch "^#"
 $hc=@{}
 $c | foreach {
