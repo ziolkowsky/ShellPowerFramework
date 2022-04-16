@@ -1,35 +1,43 @@
-function Global:Parse-Filename{
-    param([string]$f=$Filename)
-    if(!$f){ return "{0}-NewScript.ps1" -f $(Get-Date).ToString('yyyyMMdd_HHmmss') }
-    if($f.Substring($f.Length -4,4).StartsWith('.')){
-        return $f 
+function Global:Parse-FileName{
+    param([string]$FileName=$FileName)
+    if(!$FileName){ return "{0}-NewScript.ps1" -f $(Get-Date).ToString('yyyyMMdd_HHmmss') }
+    if($FileName.Length -ge 5 -and $FileName -match "."){
+        if($FileName.Substring($FileName.Length -4,4).Length -eq 4){
+            return $FileName
+        }
     }
-    return "{0}.ps1" -f $f
+    return "{0}.ps1" -f $FileName
 <#
 .SYNOPSIS
-Parses filename.
+Parses FileName.
 
 .DESCRIPTION
-Parses filename and returns string with PS1 extension if not provided or whole default string with current datetime in format: yyyyMMdd_HHmmss-NewScript.ps1.
-Returns same string when extension was provided with filename.
+Parses FileName and returns string with PS1 extension if not provided or whole default string with current datetime in format: yyyyMMdd_HHmmss-NewScript.ps1.
+Returns same string when extension was provided with FileName.
 
 .EXAMPLE
-PS> Parse-Filename TestFile 
+PS> Parse-FileName TestFile 
 
 Returns: TestFile.ps1
 
 .EXAMPLE
-PS> Parse-Filename 
+PS> Parse-FileName 
 
 Returns: 20220415_212359-NewScript.ps1 (based at current Get-Date)
 
 .EXAMPLE 
-PS> Parse-Filename TestFile.txt
+PS> Parse-FileName TestFile.txt
 
 Returns: TestFile.txt
 
 .PARAMETER f
-Filename to parse.
+FileName to parse.
+
+.LINK
+https://ziolkowsky.wordpress.com/2022/04/16/parse-filename/
+
+.LINK 
+https://github.com/ziolkowsky/ShellPowerFramework
 
 .NOTES
 Author : Sebastian Zió³kowski
@@ -43,24 +51,24 @@ function Global:Create-File{
     param(
         [switch]$CommentBasedHelp,
         [Parameter(Position=0)]
-        [string]$f=$Filename,
+        [string]$FileName=$FileName,
         [switch]$Force:Force,
         [Parameter(Position=1)]
-        [string[]]$fu=$Functionname
+        [string[]]$FunctionName=$FunctionName
     )
-    $f=Parse-Filename $f
-    if($fu){
-        Create-FileFunction $f $fu -CommentBasedHelp:$CommentBasedHelp
+    $FileName=Parse-FileName $FileName
+    if($FunctionName){
+        Create-FileFunction $FileName $FunctionName -CommentBasedHelp:$CommentBasedHelp
     }else{
-        Set-File $f
-        Open-File $f
+        Set-File $FileName
+        Open-File $FileName
     }
 <#
 .SYNOPSIS
 Creates and/or opens file.
 
 .DESCRIPTION
-Function creates file and opens it. If file already exist it will be opened. If command executes with Functionname parameter then function structure will be appended to file.
+Function creates file and opens it. If file already exist it will be opened. If command executes with FunctionName parameter then function structure will be appended to file.
 It is possible to attach Comment Based Help section by including proper parameter.
 
 .EXAMPLE
@@ -75,11 +83,17 @@ PS> Create-File TestFile New-Function -CommentBasedHelp
 .PARAMETER CommentBasedHelp
 Adds Comment Based Help to function.
 
-.PARAMETER f
+.PARAMETER FileName
 File name
 
-.PARAMETER fu
+.PARAMETER FunctionName
 Function name 
+
+.LINK
+https://ziolkowsky.wordpress.com/2022/04/16/create-file/
+
+.LINK 
+https://github.com/ziolkowsky/ShellPowerFramework
 
 .NOTES
 Author : Sebastian Zió³kowski
@@ -92,18 +106,18 @@ function Global:Create-FileFunction{
     [Alias('cff')]
     param(
         [Parameter(Position=0)]
-        [string]$Filename=$Filename,
+        [string]$FileName=$FileName,
         [Parameter(Position=1)]
         [string[]]$FunctionName,
         [switch]$CommentBasedHelp
     )
-    $fu=$Functionname
-    if($fu){
-        $f=Parse-Filename $Filename
-        $fu | foreach {
-            Set-File $f $_ -Append -CommentBasedHelp:$CommentBasedHelp
+    $fu=$FunctionName
+    if($FunctionName){
+        $FileName=Parse-FileName $FileName
+        $FunctionName | foreach {
+            Set-File $FileName $_ -Append -CommentBasedHelp:$CommentBasedHelp
         }
-        Reload-Tab $f
+        Reload-Tab $FileName
     }
 
 <#
@@ -117,11 +131,17 @@ It is possible to attach Comment Based Help section by including proper paramete
 .PARAMETER CommentBasedHelp
 Adds Comment Based Help to functions.
 
-.PARAMETER f
+.PARAMETER FileName
 File name
 
-.PARAMETER fu
+.PARAMETER FunctionName
 Function name 
+
+.LINK
+https://ziolkowsky.wordpress.com/2022/04/16/create-filefunction/
+
+.LINK 
+https://github.com/ziolkowsky/ShellPowerFramework
 
 .NOTES
 Author : Sebastian Zió³kowski
@@ -132,14 +152,14 @@ GitHub : github.com/ziolkowsky
 
 function Global:Remove-File{
     [Alias("rmf")]
-    param([string]$f=$Filename) 
+    param([string]$f) 
         if(!$f){return}
-        $f=Parse-Filename $f
+        $f=Parse-FileName $f
         if($f -match $psISE.CurrentFile.DisplayName){
             $psISE.CurrentPowerShellTab.Files.Remove($psISE.CurrentFile) | Out-Null
         }
         rm ".\$f"
-        if($f -eq $Global:Filename){rv -Name Filename -Scope Global -Force:$Force}
+        if($f -eq $Global:FileName){rv -Name FileName -Scope Global -Force:$Force}
         Write-Output $("File {0} has been removed." -f $f)
 <#
 .SYNOPSIS
@@ -150,6 +170,12 @@ Removes file by provided file name or last created if blank. If file is opened i
 
 .PARAMETER f
 File name
+
+.LINK
+https://ziolkowsky.wordpress.com/2022/04/16/create-filefunction/
+
+.LINK 
+https://github.com/ziolkowsky/ShellPowerFramework
 
 .NOTES
 Author : Sebastian Zió³kowski
@@ -195,7 +221,7 @@ function Global:Reload-File{
     [Alias('rl')]
         param([Parameter(Position=0)][string]$f
         )
-        $f=Parse-Filename $f
+        $f=Parse-FileName $f
         $itab=$psise.PowerShellTabs.Files | ? { $_.DisplayName -eq $f } 
         if(!$itab){
             Open-File $f
