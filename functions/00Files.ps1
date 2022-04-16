@@ -188,21 +188,21 @@ GitHub : github.com/ziolkowsky
 
 function Global:Open-File{
     [Alias("of")]
-    param([Parameter(Position=0)][string]$f) 
-        if(!$f){return}
+    param([Parameter(Position=0)][string]$FileName) 
+        if(!$FileName){return}
         $CheckEditor=Get-Command -CommandType Application | ? { $_.Name -eq 'powershell_ise.exe' -or $_.Source -like '*powershell*ise.exe'}
         if(!$CheckEditor){
             $CheckEditor="notepad.exe"
         }    
-        Invoke-Expression "$($CheckEditor.Name) `'$f`'"
-        Write-Output $("File {0} has been opened in {1}" -f $f, $CheckEditor.Name.Split('.')[0])
+        Invoke-Expression "$($CheckEditor.Name) `'$FileName`'"
+        Write-Output $("File {0} has been opened in {1}" -f $FileName, $CheckEditor.Name.Split('.')[0])
 <#
 .SYNOPSIS
 Opens file in Powershell ISE.
 
 .DESCRIPTION
-Opens specified or latest created file. By default it will try to edit file with Powershell ISE  but if not found at system then
-it will open in notepad. (Not sure why it is working this way, just wanted to make it so I did)
+Opens specified or latest created file. By default it will try to edit file with Powershell ISE  but if not found at system then it will open in notepad. 
+Not sure why it is working this way, just wanted to make it so I did.
 
 .EXAMPLE
 PS> Open-File TestFile
@@ -211,6 +211,12 @@ PS> Open-File TestFile
 PS> Open-File 
 
 Opens latest created file.
+
+.LINK
+https://ziolkowsky.wordpress.com/2022/04/16/open-file/
+
+.LINK 
+https://github.com/ziolkowsky/ShellPowerFramework
 
 .NOTES
 Author : Sebastian Zió³kowski
@@ -221,18 +227,47 @@ GitHub : github.com/ziolkowsky
 
 function Global:Reload-File{
     [Alias('rl')]
-        param([Parameter(Position=0)][string]$f
-        )
-        $f=Parse-FileName $f
-        $itab=$psise.PowerShellTabs.Files | ? { $_.DisplayName -eq $f } 
-        if(!$itab){
-            Open-File $f
-            return
-        }
-        $fp=$itab.FullPath
-        $psise.CurrentPowerShellTab.Files.Remove($itab) | Out-Null
-        $psise.CurrentPowerShellTab.Files.Add($fp) | Out-Null
-        Write-Output "File $f has been reloaded."
+    param(
+        [Parameter(Position=0)]
+        [string]$File
+    )
+    $File=Parse-FileName $File
+    $itab=$psise.PowerShellTabs.Files | ? { $_.DisplayName -eq $File } 
+    if(!$itab){
+        Open-File $File
+        return
+    }
+    $fp=$itab.FullPath
+    $psise.CurrentPowerShellTab.Files.Remove($itab) | Out-Null
+    $psise.CurrentPowerShellTab.Files.Add($fp) | Out-Null
+    Write-Output "File $File has been reloaded."
+<#
+.SYNOPSIS
+Opens file in Powershell ISE.
+
+.DESCRIPTION
+Opens specified or latest created file. By default it will try to edit file with Powershell ISE  but if not found at system then it will open in notepad. 
+Not sure why it is working this way, just wanted to make it so I did.
+
+.EXAMPLE
+PS> Reload-File TestFile
+
+.EXAMPLE
+PS> Reload-File 
+
+Opens latest created file.
+
+.LINK
+https://ziolkowsky.wordpress.com/2022/04/16/reload-file/
+
+.LINK 
+https://github.com/ziolkowsky/ShellPowerFramework
+
+.NOTES
+Author : Sebastian Zió³kowski
+Website: ziolkowsky.wordpress.com
+GitHub : github.com/ziolkowsky
+#>
 }
 
 function Global:Set-File{
