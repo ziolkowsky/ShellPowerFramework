@@ -229,10 +229,12 @@ function Global:Reload-File{
     [Alias('rl')]
     param(
         [Parameter(Position=0)]
-        [string]$File
+        [PSDefaultValue(Help='$psise.CurrentFile.FullPath')]
+        [string]$File=$psise.CurrentFile.FullPath
+
     )
     $File=Parse-FileName $File
-    $itab=$psise.PowerShellTabs.Files | ? { $_.DisplayName -eq $File } 
+    $itab=$psise.PowerShellTabs.Files | ? { $_.DisplayName -eq (split-path $File -Leaf) } 
     if(!$itab){
         Open-File $File
         return
@@ -243,11 +245,10 @@ function Global:Reload-File{
     Write-Output "File $File has been reloaded."
 <#
 .SYNOPSIS
-Opens file in Powershell ISE.
+Reloads or opens file.
 
 .DESCRIPTION
-Opens specified or latest created file. By default it will try to edit file with Powershell ISE  but if not found at system then it will open in notepad. 
-Not sure why it is working this way, just wanted to make it so I did.
+Reloads content of file or opens if not in aby opened tab.
 
 .EXAMPLE
 PS> Reload-File TestFile
@@ -255,7 +256,7 @@ PS> Reload-File TestFile
 .EXAMPLE
 PS> Reload-File 
 
-Opens latest created file.
+Reloads current active tab.
 
 .LINK
 https://ziolkowsky.wordpress.com/2022/04/16/reload-file/
@@ -273,19 +274,45 @@ GitHub : github.com/ziolkowsky
 function Global:Set-File{
     param(
         [Parameter(Position=0)]
-        [string]$f,
+        [string]$File,
         [Parameter(Position=1)]
-        [string]$fu,
+        [string]$FunctionName,
         [switch]$Append,
         [switch]$CommentBasedHelp
         )
-    if(!(Test-Path $f) -or ((Test-Path $f) -and $Force)){
-        New-Item -ItemType File -Name $f -Path .\ -Force:$Force | Out-Null
-        Write-Output "File $f has been created."
+    if(!(Test-Path $File) -or ((Test-Path $File) -and $Force)){
+        New-Item -ItemType File -Name $File -Path .\ -Force:$Force | Out-Null
+        Write-Output "File $File has been created."
     }
     if($Append){
-        $s=Get-Function -FunctionName $fu -CommentBasedHelp:$CommentBasedHelp
-        $s | Out-File $f -Append
-        Write-Output "Function $fu has been added to $f."
+        $s=Get-Function -FunctionName $FunctionName -CommentBasedHelp:$CommentBasedHelp
+        $s | Out-File $File -Append
+        Write-Output "Function $FunctionName has been added to $File."
     }
+<#
+.SYNOPSIS
+Creates file and appends function structure.
+
+.DESCRIPTION
+Creates file and appends function structure if proper parameters are included.
+
+.EXAMPLE
+PS> Set-File TestFile
+
+.EXAMPLE
+PS> Reload-File 
+
+Reloads current active tab.
+
+.LINK
+https://ziolkowsky.wordpress.com/2022/04/16/set-file/
+
+.LINK 
+https://github.com/ziolkowsky/ShellPowerFramework
+
+.NOTES
+Author : Sebastian Zió³kowski
+Website: ziolkowsky.wordpress.com
+GitHub : github.com/ziolkowsky
+#>
 }
