@@ -61,14 +61,15 @@ Loads all framework functions to current Powershell session. When you use -Auto 
 .EXAMPLE
 PS> init.ps1
 
+Loads functions only.
+
 .EXAMPLE
 PS> init.ps1 -Auto
 
-.EXAMPLE 
-PS> init.ps1 -Auto -Verbose
+Loads functions, mounting point and set working directory.
 
 .EXAMPLE 
-PS> .\Init.ps1 -Auto -Filename test -CodeType Function -CommentBasedHelp
+PS> .\Init.ps1 TestFile -Auto 
 
 .PARAMETER Auto
 Some functions can be executed automatically after initial load.
