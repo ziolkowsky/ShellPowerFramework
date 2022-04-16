@@ -7,7 +7,7 @@ param(
     [string]$CodeType='Function', 
     [switch]$CommentBasedHelp,
     [Parameter(Position=0)]
-    [string]$Filename,
+    [string]$FileName,
     [switch]$Force,
     [Parameter(Position=1)]
     [string]$FunctionName,
@@ -21,10 +21,10 @@ $Global:Advanced=$Advanced
 $Global:Auto=$Auto
 $Global:CommentBasedHelp=$CommentBasedHelp
 $Global:CodeType=$CodeType
-$Global:Filename=$Filename
+$Global:FileName=$FileName
 $Global:Force=$Force
-Write-Host $null
 
+Write-Host $null
 Get-ChildItem .\functions | where {!$_.PSIsContainer} | foreach {
     try{
         Write-Host "Loading $($_.Name) module: " -NoNewline
@@ -41,14 +41,14 @@ if($Auto){
     Mount-Init       
 }
 
-if($Filename -and $FunctionName){
-    Create-FileFunction $Filename $FunctionName -CommentBasedHelp:$CommentBasedHelp
-}elseif($Filename){
-    $Filename=Parse-Filename $Filename
-    if(test-path $Filename){
-        of $Filename
+if($FileName -and $FunctionName){
+    Create-FileFunction $FileName $FunctionName -CommentBasedHelp:$CommentBasedHelp
+}elseif($FileName){
+    $FileName=Parse-FileName $FileName
+    if(test-path $FileName){
+        of $FileName
     }else{
-        cf $Filename
+        cf $FileName
     }
 }
 
@@ -58,10 +58,7 @@ if($Filename -and $FunctionName){
 Initial loads framework functions to PS session. 
 
 .SYNOPSIS
-Loads all framework functions to current Powershell session. When you use -Auto parameter then some of functions will run atuomatically:
-- mount script dirrectory
-- set it as working directory
-- loads global functions
+Loads all framework functions to current Powershell session. 
 
 .EXAMPLE
 PS> init.ps1
@@ -71,22 +68,43 @@ Loads functions only.
 .EXAMPLE
 PS> init.ps1 -Auto
 
-Loads functions, mounting point and set working directory.
+Loads functions, mounts and sets working directory.
 
 .EXAMPLE 
 PS> .\Init.ps1 TestFile -Auto 
+
+Loads functions, mounts and sets working directory and opens/creates file.
+
+.EXAMPLE 
+PS> .\Init.ps1 TestFile New-Function -Auto 
+
+Loads functions, mounts and sets working directory and opens/creates file with function.
+
+.EXAMPLE 
+PS> .\Init.ps1 TestFile New-Function -Auto -CommentBasedHelp
+
+Loads functions, mounts and sets working directory and opens/creates file with function with comments based help section.
 
 .PARAMETER Auto
 Some functions can be executed automatically after initial load.
 
 .PARAMETER CommentBasedHelp
-Adds Comment-Based Help sections to script and function.
+Adds comment based help section.
+
+.PARAMETER FileName
+Defines file name.
+
+.Parameter FunctionName
+Defines function name which will be append to file.
 
 .PARAMETER Local
 Defines local config file.
 
 .LINK 
-Framework: https://github.com/ziolkowsky/ShellPowerFramework
+https://github.com/ziolkowsky/ShellPowerFramework
+
+.LINK 
+https://ziolkowsky.wordpress.com/category/spframework/
 
 .NOTES
 Author : Sebastian Zió³kowski
