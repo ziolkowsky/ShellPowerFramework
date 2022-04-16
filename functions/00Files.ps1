@@ -111,7 +111,6 @@ function Global:Create-FileFunction{
         [string[]]$FunctionName,
         [switch]$CommentBasedHelp
     )
-    $fu=$FunctionName
     if($FunctionName){
         $FileName=Parse-FileName $FileName
         $FunctionName | foreach {
@@ -152,27 +151,30 @@ GitHub : github.com/ziolkowsky
 
 function Global:Remove-File{
     [Alias("rmf")]
-    param([string]$f) 
-        if(!$f){return}
-        $f=Parse-FileName $f
-        if($f -match $psISE.CurrentFile.DisplayName){
+    param(
+        [PSDefaultValue(Help='$psISE.CurrentFile.FullPath')]
+        [string]$FileName=($psISE.CurrentFile.FullPath)
+    ) 
+        if(!$FileName){return}
+        $FileName=Parse-FileName $FileName
+        if($FileName -match $psISE.CurrentFile.DisplayName){
             $psISE.CurrentPowerShellTab.Files.Remove($psISE.CurrentFile) | Out-Null
         }
-        rm ".\$f"
-        if($f -eq $Global:FileName){rv -Name FileName -Scope Global -Force:$Force}
-        Write-Output $("File {0} has been removed." -f $f)
+        rm ".\$FileName"
+        if($FileName -eq $Global:FileName){rv -Name FileName -Scope Global -Force:$Force}
+        Write-Output $("File {0} has been removed." -f $FileName)
 <#
 .SYNOPSIS
-Removes file
+Removes file.
 
 .DESCRIPTION
-Removes file by provided file name or last created if blank. If file is opened in Powershell ISE proper tab will be closed before removing. 
+Removes file and closes tab if opened. If FileName not provided then current active file will be removed.
 
-.PARAMETER f
-File name
+.PARAMETER FileName
+File name.
 
 .LINK
-https://ziolkowsky.wordpress.com/2022/04/16/create-filefunction/
+https://ziolkowsky.wordpress.com/2022/04/16/remove-file/
 
 .LINK 
 https://github.com/ziolkowsky/ShellPowerFramework
