@@ -37,7 +37,7 @@ Get-ChildItem .\functions | where {!$_.PSIsContainer} | foreach {
 Write-Host $null
 
 if($Auto){
-    Mount-Init       
+    Mount-Init   
 }
 
 if($FileName -and $FunctionName){
