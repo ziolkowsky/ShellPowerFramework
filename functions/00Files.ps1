@@ -1,3 +1,28 @@
+<#
+.SYNOPSIS
+Library of functions related with files actions.
+
+.DESCRIPTION
+Library of functions related with files actions.
+
+.EXAMPLE
+PS> .\01Files.ps1
+
+Loads functions to current PoweerShell session.
+
+.LINK
+https://ziolkowsky.wordpress.com/2022/04/17/00Files.ps1
+
+.LINK 
+https://github.com/ziolkowsky/ShellPowerFramework
+
+.NOTES
+Author : Sebastian Zió³kowski
+Website: ziolkowsky.wordpress.com
+GitHub : github.com/ziolkowsky
+#>
+
+
 function Global:Parse-FileName{
     param([string]$FileName=$FileName)
     if(!$FileName){ return "{0}-NewScript.ps1" -f $(Get-Date).ToString('yyyyMMdd_HHmmss') }
