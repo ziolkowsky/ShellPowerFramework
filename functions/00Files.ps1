@@ -328,6 +328,7 @@ param(
         [switch]$CommentBasedHelp,
         [switch]$Force
     )
+    $File=Parse-FileName $File
     if(!(Test-Path $File) -or ((Test-Path $File) -and $Force)){
         New-Item -ItemType File -Name $File -Path .\ -Force:$Force | Out-Null
         Write-Output "File $File has been created."
