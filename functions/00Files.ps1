@@ -213,14 +213,15 @@ GitHub : github.com/ziolkowsky
 
 function Global:Open-File{
     [Alias("of")]
-    param([Parameter(Position=0)][string]$FileName) 
-        if(!$FileName){return}
+    param([Parameter(Position=0)][string]$File) 
+        if(!$File){return}
+        $File=Parse-FileName $File
         $CheckEditor=Get-Command -CommandType Application | ? { $_.Name -eq 'powershell_ise.exe' -or $_.Source -like '*powershell*ise.exe'}
         if(!$CheckEditor){
             $CheckEditor="notepad.exe"
         }    
-        Invoke-Expression "$($CheckEditor.Name) `'$FileName`'"
-        Write-Output $("File {0} has been opened in {1}" -f $FileName, $CheckEditor.Name.Split('.')[0])
+        Invoke-Expression "$($CheckEditor.Name) `'$File`'"
+        Write-Output $("File {0} has been opened in {1}" -f $File, $CheckEditor.Name.Split('.')[0])
 <#
 .SYNOPSIS
 Opens file in Powershell ISE.
