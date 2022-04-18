@@ -11,15 +11,12 @@
 function Global:Set-CommentBasedHelp{
 return "`n<#
 .SYNOPSIS
-auto_generated
 
 .DESCRIPTION
-auto_generated
 
 $(Get-Examples)
 
 .PARAMETER Param1
-Description for Param1
 
 .NOTES
 $(Get-Author)
@@ -165,7 +162,7 @@ return "
 function $Functionname{
     [CmdletBinding()]
     Param(
-        [Parameter(Mandatory=`$true)]
+        [Parameter(Position=0)]
         [string] `$Param1
     )
     begin{
@@ -185,7 +182,7 @@ function $Functionname{
 return "
 function $FunctionName{
     param(
-        [Parameter(Mandatory=`$false)]
+        [Parameter(Position=0)]
         `$Param1
     )
 $(if($CommentBasedHelp){Set-CommentBasedHelp})
