@@ -196,9 +196,6 @@ Removes file.
 .DESCRIPTION
 Removes file and closes tab if opened. If File not provided then current active file will be removed.
 
-.PARAMETER File
-File name.
-
 .LINK
 https://ziolkowsky.wordpress.com/2022/04/16/remove-file/
 
