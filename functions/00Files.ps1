@@ -178,24 +178,25 @@ function Global:Remove-File{
     [Alias("rmf")]
     param(
         [PSDefaultValue(Help='$psISE.CurrentFile.FullPath')]
-        [string]$FileName=($psISE.CurrentFile.FullPath)
+        [string]$File=($psISE.CurrentFile.FullPath)
     ) 
-        if(!$FileName){return}
-        $FileName=Parse-FileName $FileName
-        if($FileName -match $psISE.CurrentFile.DisplayName){
+        if(!$File){return}
+        $File=Parse-FileName $File
+        if($File -match $psISE.CurrentFile.DisplayName){
+            $psISE.CurrentFile.Save()
             $psISE.CurrentPowerShellTab.Files.Remove($psISE.CurrentFile) | Out-Null
         }
-        rm ".\$FileName"
-        if($FileName -eq $Global:FileName){rv -Name FileName -Scope Global -Force:$Force}
-        Write-Output $("File {0} has been removed." -f $FileName)
+        rm $File
+        if($File -eq $Global:File){rv -Name File -Scope Global -Force:$Force}
+        Write-Output $("File {0} has been removed." -f $File)
 <#
 .SYNOPSIS
 Removes file.
 
 .DESCRIPTION
-Removes file and closes tab if opened. If FileName not provided then current active file will be removed.
+Removes file and closes tab if opened. If File not provided then current active file will be removed.
 
-.PARAMETER FileName
+.PARAMETER File
 File name.
 
 .LINK
