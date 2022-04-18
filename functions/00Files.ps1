@@ -26,7 +26,7 @@ GitHub : github.com/ziolkowsky
 function Global:Parse-FileName{
     param([string]$FileName=$FileName)
     if(!$FileName){ return "{0}-NewScript.ps1" -f $(Get-Date).ToString('yyyyMMdd_HHmmss') }
-    if($FileName.Length -ge 5 -and $FileName -match "."){
+    if($FileName.Length -ge 5 -and $FileName -like "*.*"){
         if($FileName.Substring($FileName.Length -4,4).Length -eq 4){
             return $FileName
         }
