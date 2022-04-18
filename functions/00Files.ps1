@@ -316,15 +316,18 @@ GitHub : github.com/ziolkowsky
 #>
 }
 
+
+
 function Global:Set-File{
-    param(
+param(
         [Parameter(Position=0)]
         [string]$File,
         [Parameter(Position=1)]
         [string]$FunctionName,
         [switch]$Append,
-        [switch]$CommentBasedHelp
-        )
+        [switch]$CommentBasedHelp,
+        [switch]$Force
+    )
     if(!(Test-Path $File) -or ((Test-Path $File) -and $Force)){
         New-Item -ItemType File -Name $File -Path .\ -Force:$Force | Out-Null
         Write-Output "File $File has been created."
