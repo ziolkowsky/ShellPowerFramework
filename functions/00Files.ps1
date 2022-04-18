@@ -131,18 +131,22 @@ function Global:Create-FileFunction{
     [Alias('cff')]
     param(
         [Parameter(Position=0)]
-        [string]$FileName,
+        [string]$File,
         [Parameter(Position=1)]
-        [string[]]$FunctionName,
+        [string[]]$Function,
         [switch]$CommentBasedHelp
     )
-    if(!$FileName){$FileName=$psISE.CurrentFile.FullPath}
-    if($FunctionName){
-        $FileName=Parse-FileName $FileName
-        $FunctionName | foreach {
-            Set-File $FileName $_ -Append -CommentBasedHelp:$CommentBasedHelp
+    if(!$File -and !$Function){
+        return
+    }elseif(!$File){
+        $File=$psISE.CurrentFile.FullPath
+    }
+    if($Function){
+        $File=Parse-FileName $File
+        $Function | foreach {
+            Set-File $File $_ -Append -CommentBasedHelp:$CommentBasedHelp
         }
-        Reload-Tab $FileName
+        Reload-Tab $File
     }
 
 <#
@@ -150,17 +154,33 @@ function Global:Create-FileFunction{
 Creates one or multiple functions in new or existing file.
 
 .DESCRIPTION
-Creates functions structure in new file or appends it to existing one. You can specify file name and functions names. 
+Creates functions structure in new file or appends it to existing one. You can specify file name and function(s) name(s). 
 It is possible to attach Comment Based Help section by including proper parameter.
+
+.EXAMPLE 
+PS> Create-FileFunction NewFile NewFunc
+
+.EXAMPLE 
+PS> Create-FileFunction NewFile NewFunc1,NewFunc2,NewFunc3
+
+.EXAMPLE 
+PS> Create-FileFunction "" NewFunc
+
+Appends one function to current active file.
+
+.EXAMPLE 
+PS> Create-FileFunction "" NewFunc1,NewFunc2,NewFunc3
+
+Appends multiple functions to current active file.
 
 .PARAMETER CommentBasedHelp
 Adds Comment Based Help to functions.
 
-.PARAMETER FileName
-File name
+.PARAMETER File
+File name.
 
-.PARAMETER FunctionName
-Function name 
+.PARAMETER Function
+Function name. It coult be a list of function.
 
 .LINK
 https://ziolkowsky.wordpress.com/2022/04/16/create-filefunction/
