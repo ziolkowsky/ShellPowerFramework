@@ -194,7 +194,7 @@ function Global:Remove-File{
 Removes file.
 
 .DESCRIPTION
-Removes file and closes tab if opened. If File not provided then current active file will be removed.
+Removes file and closes tab if opened. If file not provided then current active file will be removed.
 
 .LINK
 https://ziolkowsky.wordpress.com/2022/04/16/remove-file/
