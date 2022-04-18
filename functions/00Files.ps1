@@ -131,11 +131,12 @@ function Global:Create-FileFunction{
     [Alias('cff')]
     param(
         [Parameter(Position=0)]
-        [string]$FileName=$FileName,
+        [string]$FileName,
         [Parameter(Position=1)]
         [string[]]$FunctionName,
         [switch]$CommentBasedHelp
     )
+    if(!$FileName){$FileName=$psISE.CurrentFile.FullPath}
     if($FunctionName){
         $FileName=Parse-FileName $FileName
         $FunctionName | foreach {
