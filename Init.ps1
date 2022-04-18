@@ -10,7 +10,7 @@ param(
     [string]$FileName,
     [switch]$Force,
     [Parameter(Position=1)]
-    [string]$FunctionName
+    [string[]]$Function
 )
 
 $ErrorActionPreference="Stop"
@@ -40,8 +40,8 @@ if($Auto){
     Mount-Init   
 }
 
-if($FileName -and $FunctionName){
-    Create-FileFunction $FileName $FunctionName -CommentBasedHelp:$CommentBasedHelp
+if($FileName -and $Function){
+    Create-FileFunction $FileName $Function -CommentBasedHelp:$CommentBasedHelp
 }elseif($FileName){
     $FileName=Parse-FileName $FileName
     if(test-path $FileName){
@@ -84,6 +84,9 @@ PS> .\Init.ps1 TestFile New-Function -Auto -CommentBasedHelp
 
 Loads functions, mounts and sets working directory and opens/creates file with function with comments based help section.
 
+.EXAMPLE 
+PS> .\Init.ps1 TestFile New-Func1,New-Func2,New-Func3 -Auto -CommentBasedHelp
+
 .PARAMETER Auto
 Some functions can be executed automatically after initial load.
 
@@ -93,8 +96,8 @@ Adds comment based help section.
 .PARAMETER FileName
 Defines file name.
 
-.Parameter FunctionName
-Defines function name which will be append to file.
+.Parameter Function
+Defines function(s) name(s) which will be append to file.
 
 .LINK
 https://ziolkowsky.wordpress.com/2022/04/16/init-ps1/
