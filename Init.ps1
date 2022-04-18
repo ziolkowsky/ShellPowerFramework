@@ -7,7 +7,7 @@ param(
     [string]$CodeType='Function', 
     [switch]$CommentBasedHelp,
     [Parameter(Position=0)]
-    [string]$FileName,
+    [string]$File,
     [switch]$Force,
     [Parameter(Position=1)]
     [string[]]$Function
@@ -20,7 +20,7 @@ $Global:Advanced=$Advanced
 $Global:Auto=$Auto
 $Global:CommentBasedHelp=$CommentBasedHelp
 $Global:CodeType=$CodeType
-$Global:FileName=$FileName
+$Global:File=$File
 $Global:Force=$Force
 
 Write-Host $null
@@ -40,14 +40,14 @@ if($Auto){
     Mount-Init   
 }
 
-if($FileName -and $Function){
-    Create-FileFunction $FileName $Function -CommentBasedHelp:$CommentBasedHelp
-}elseif($FileName){
-    $FileName=Parse-FileName $FileName
-    if(test-path $FileName){
-        of $FileName
+if($File -and $Function){
+    Create-FileFunction $File $Function -CommentBasedHelp:$CommentBasedHelp
+}elseif($File){
+    $File=Parse-FileName $File
+    if(test-path $File){
+        of $File
     }else{
-        cf $FileName
+        cf $File
     }
 }
 
@@ -77,12 +77,12 @@ Loads functions, mounts and sets working directory and opens/creates file.
 .EXAMPLE 
 PS> .\Init.ps1 TestFile New-Function -Auto 
 
-Loads functions, mounts and sets working directory and opens/creates file with function.
+Loads functions, mounts and sets working directory and opens/creates file with function(s).
 
 .EXAMPLE 
 PS> .\Init.ps1 TestFile New-Function -Auto -CommentBasedHelp
 
-Loads functions, mounts and sets working directory and opens/creates file with function with comments based help section.
+Loads functions, mounts and sets working directory and opens/creates file with function(s) and comments based help section.
 
 .EXAMPLE 
 PS> .\Init.ps1 TestFile New-Func1,New-Func2,New-Func3 -Auto -CommentBasedHelp
@@ -93,7 +93,7 @@ Some functions can be executed automatically after initial load.
 .PARAMETER CommentBasedHelp
 Adds comment based help section.
 
-.PARAMETER FileName
+.PARAMETER File
 Defines file name.
 
 .Parameter Function
