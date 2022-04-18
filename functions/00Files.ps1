@@ -180,15 +180,15 @@ function Global:Remove-File{
         [PSDefaultValue(Help='$psISE.CurrentFile.FullPath')]
         [string]$File=($psISE.CurrentFile.FullPath)
     ) 
-        if(!$File){return}
+    if(!$File){return}
         $File=Parse-FileName $File
-        if($File -match $psISE.CurrentFile.DisplayName){
-            $psISE.CurrentFile.Save()
-            $psISE.CurrentPowerShellTab.Files.Remove($psISE.CurrentFile) | Out-Null
-        }
-        rm $File
-        if($File -eq $Global:File){rv -Name File -Scope Global -Force:$Force}
-        Write-Output $("File {0} has been removed." -f $File)
+    if($File -match $psISE.CurrentFile.DisplayName){
+        $psISE.CurrentFile.Save()
+        $psISE.CurrentPowerShellTab.Files.Remove($psISE.CurrentFile) | Out-Null
+    }
+    rm $File
+    if($File -eq $Global:File){rv -Name File -Scope Global -Force:$Force}
+    Write-Output $("File {0} has been removed." -f $File)
 <#
 .SYNOPSIS
 Removes file.
