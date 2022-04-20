@@ -147,19 +147,17 @@ function Get-Indent{
 }
 
 function Global:Get-Function{
-param(
-    [Parameter(Position=0)]
-    [string]$FunctionName,
-    [int]$IndentLevel=0,
-    [switch]$CommentBasedHelp
+    param(
+        [Parameter(Position=0)]
+        [string]$FunctionName,
+        [int]$IndentLevel=0,
+        [switch]$CommentBasedHelp
     )
-if(!$FunctionName){
-    $FunctionName='New-Function'
-}
-
+    if(!$FunctionName){$FunctionName='New-Function'}
+    
 if($Advanced){
-return "
-function $Functionname{
+return @"
+function $($Functionname){
     [CmdletBinding()]
     Param(
         [Parameter(Position=0)]
@@ -176,18 +174,21 @@ function $Functionname{
     
     }
     $(if($CommentBasedHelp){Set-CommentBasedHelp})
-}"
 }
 
-return "
-function $FunctionName{
+"@
+}
+
+return @"
+function $($FunctionName){
     param(
         [Parameter(Position=0)]
         `$Param1
     )
 $(if($CommentBasedHelp){Set-CommentBasedHelp})
 }
-"
+
+"@
 }
 
 function Set-Function{
