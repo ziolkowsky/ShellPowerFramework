@@ -146,6 +146,7 @@ function Global:Create-FileFunction{
         $Function | foreach {
             Set-File $File $_ -Append -CommentBasedHelp:$CommentBasedHelp
         }
+        Start-Sleep -Milliseconds 100
         Reload-Tab $File
     }
 
