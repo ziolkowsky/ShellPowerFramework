@@ -77,15 +77,17 @@ function Global:Create-File{
         [switch]$CommentBasedHelp,
         [Parameter(Position=0)]
         [string]$FileName=$FileName,
-        [switch]$Force:Force,
+        [switch]$Force,
         [Parameter(Position=1)]
-        [string[]]$FunctionName=$FunctionName
+        [string[]]$FunctionName
     )
+
     $FileName=Parse-FileName $FileName
+
     if($FunctionName){
         Create-FileFunction $FileName $FunctionName -CommentBasedHelp:$CommentBasedHelp
     }else{
-        Set-File $FileName
+        Set-File $FileName $FunctionName -Force:$Force
         Open-File $FileName
     }
 <#
