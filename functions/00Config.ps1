@@ -2,7 +2,9 @@
 if(!(test-path $f)){
     $f='.\config.txt'
 }
-$c=$(gc $f -Encoding UTF8) -notmatch "^#"
+
+$c=(gc $f) -notmatch "^#"
+
 $hc=@{}
 $c | foreach {
     $fc=$_ -split "="
