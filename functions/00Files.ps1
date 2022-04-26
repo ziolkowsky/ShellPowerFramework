@@ -133,9 +133,9 @@ function Global:Create-FileFunction{
     [Alias('cff')]
     param(
         [Parameter(Position=0)]
-        [string]$File,
-        [Parameter(Position=1)]
         [string[]]$Function,
+        [Parameter(Position=1)]
+        [string]$File,
         [switch]$CommentBasedHelp
     )
     if(!$File -and !$Function){
