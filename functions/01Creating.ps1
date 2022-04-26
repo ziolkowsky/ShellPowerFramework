@@ -179,8 +179,8 @@ function $($Functionname){
 "@
 }
 
-return @"
-function $($FunctionName){
+[string]$s=@"
+function $FunctionName{ aaaaaaaaaa
     param(
         [Parameter(Position=0)]
         `$Param1
@@ -189,10 +189,12 @@ $(if($CommentBasedHelp){Set-CommentBasedHelp})
 }
 
 "@
+
+return $s
 }
 
 function Set-Function{
-    param([string]$fn=$Functionname)
+    param([string]$fn=$FunctionName)
     $(Get-Function $fn -CommentBasedHelp:$CommentBasedHelp) | Out-File $f -Append
 }
 
@@ -256,4 +258,4 @@ function Create-Init{
 
     .LINK 
     Framework: https://github.com/ziolkowsky/ShellPowerFramework
-#>
+    #>
