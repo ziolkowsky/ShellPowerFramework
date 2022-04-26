@@ -157,6 +157,7 @@ function Global:Get-Function{
     
 if($Advanced){
 return @"
+
 function $($Functionname){
     [CmdletBinding()]
     Param(
@@ -180,6 +181,7 @@ function $($Functionname){
 }
 
 [string]$s=@"
+
 function $FunctionName{ aaaaaaaaaa
     param(
         [Parameter(Position=0)]
