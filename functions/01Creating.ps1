@@ -49,7 +49,7 @@ Set-WorkingDirectory"
 }
 
 function Set-ScriptConfiguration{
-    Get-ScriptConfiguration | Out-File $f -Append
+    Get-ScriptConfiguration | Out-File $f -Append -Encoding utf8
 }
 
 function Set-Script{
@@ -73,13 +73,13 @@ process{
 end{
     
 }
-"@ | Out-File $f -Append
+"@ | Out-File $f -Append -Encoding utf8
         return
     }
 
 "param(`$Param1)
 
-$(Get-ScriptConfiguration)" | Out-File $f -Append
+$(Get-ScriptConfiguration)" | Out-File $f -Append -Encoding utf8
     return
   
 }
@@ -182,7 +182,7 @@ function $($Functionname){
 
 [string]$s=@"
 
-function $FunctionName{ aaaaaaaaaa
+function $FunctionName{ 
     param(
         [Parameter(Position=0)]
         `$Param1
@@ -197,7 +197,8 @@ return $s
 
 function Set-Function{
     param([string]$fn=$FunctionName)
-    $(Get-Function $fn -CommentBasedHelp:$CommentBasedHelp) | Out-File $f -Append
+    Get-Function $fn -CommentBasedHelp:$CommentBasedHelp | Out-File $f -Append -Encoding utf8
+    Start-Sleep -Milliseconds 300
 }
 
 function Parse-String{
